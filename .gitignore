@@ -1,0 +1,24 @@
+# Textbook PDFs (too large for GitHub)
+Cormen 2001 - Nhap Mon Giai Thuat Introduction to Algorithms.pdf
+Cormen and Leiserson 2022 - Introduction to Algorithms.pdf
+Tim Roughgarden - Algorithms Design Analysis.pdf
+La Rocca 2021 - Advanced Algorithms and Data Structures.pdf
+La Rocca 2024 - Grokking Data Structures.pdf
+Minh Hoang Le 2006 - Giai Thuat va Lap Trinh.pdf
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/

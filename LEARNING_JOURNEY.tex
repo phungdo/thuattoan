@@ -1,0 +1,443 @@
+% Learning Journey -- Hành Trình Học Thuật Toán
+% A visual guide for students on how to learn something completely new
+\documentclass[11pt]{article}
+
+% ===== PACKAGES =====
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes, calc, decorations.pathmorphing, backgrounds, fit, shadows}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+% ===== COLORS =====
+\definecolor{phase1}{HTML}{FF6B6B}   % Red - Overwhelm
+\definecolor{phase2}{HTML}{FFA726}   % Orange - Pattern
+\definecolor{phase3}{HTML}{66BB6A}   % Green - Build
+\definecolor{phase4}{HTML}{42A5F5}   % Blue - Create
+\definecolor{phase5}{HTML}{AB47BC}   % Purple - Master
+\definecolor{darkbg}{HTML}{1E1E2E}
+\definecolor{accent}{HTML}{F9A825}
+\definecolor{softgray}{HTML}{F5F5F5}
+
+% ===== CUSTOM ENVIRONMENTS =====
+\newtcolorbox{insightbox}[1][]{
+  colback=blue!5, colframe=blue!50!black, boxrule=0.8pt, arc=3pt,
+  fonttitle=\bfseries, title={#1},
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{storybox}[1][]{
+  colback=softgray, colframe=gray!40, boxrule=0.5pt, arc=4pt,
+  fonttitle=\bfseries\itshape, title={#1},
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  shadow={1mm}{-1mm}{0mm}{gray!30}
+}
+
+\newtcolorbox{mistakebox}[1][]{
+  colback=red!5, colframe=red!60!black, boxrule=0.8pt, arc=3pt,
+  fonttitle=\bfseries, title={\textcolor{red!60!black}{⚠ #1}},
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{tipbox}[1][]{
+  colback=green!5, colframe=green!50!black, boxrule=0.8pt, arc=3pt,
+  fonttitle=\bfseries, title={\textcolor{green!50!black}{💡 #1}},
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+% ===== TITLE =====
+\title{%
+  \vspace{-1cm}
+  {\Huge\bfseries Hành Trình Học Một Thứ Mới}\\[0.3cm]
+  {\Large\itshape Từ ``Không Biết Gì'' đến ``Hiểu Sâu''}\\[0.4cm]
+  {\normalsize Bài học rút ra từ quá trình xây dựng 52 trang Lecture Notes Thuật Toán}
+}
+\author{Do Minh Phung\\[0.2cm]{\small\itshape Dành cho những ai đang bắt đầu học bất kỳ môn nào mới}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tikzpicture}[
+  phase/.style={rectangle, rounded corners=6pt, draw=#1, fill=#1!15, 
+    text width=2.4cm, minimum height=1cm, align=center, font=\small\bfseries,
+    drop shadow={shadow xshift=0.5mm, shadow yshift=-0.5mm, opacity=0.3}},
+  arrow/.style={-{Stealth[length=3mm]}, very thick, gray!60},
+  label/.style={font=\tiny\itshape, text=gray!70}
+]
+  \node[phase=phase1] (p1) at (0,0) {Ngợp\\{\footnotesize(Overwhelm)}};
+  \node[phase=phase2] (p2) at (3.2,0) {Nhận mẫu\\{\footnotesize(Pattern)}};
+  \node[phase=phase3] (p3) at (6.4,0) {Xây dựng\\{\footnotesize(Build)}};
+  \node[phase=phase4] (p4) at (9.6,0) {Sáng tạo\\{\footnotesize(Create)}};
+  \node[phase=phase5] (p5) at (12.8,0) {Làm chủ\\{\footnotesize(Master)}};
+  
+  \draw[arrow] (p1) -- (p2);
+  \draw[arrow] (p2) -- (p3);
+  \draw[arrow] (p3) -- (p4);
+  \draw[arrow] (p4) -- (p5);
+  
+  % Time labels
+  \node[label] at (0, -0.9) {Ngày 1--2};
+  \node[label] at (3.2, -0.9) {Ngày 3--5};
+  \node[label] at (6.4, -0.9) {Tuần 1--2};
+  \node[label] at (9.6, -0.9) {Tuần 2--4};
+  \node[label] at (12.8, -0.9) {Tháng 2+};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+% ================================================================
+\section{Câu chuyện: Từ ảnh chụp bài giảng → 52 trang Lecture Notes}
+
+\begin{storybox}[Bối cảnh]
+Một sinh viên có ảnh chụp bài giảng Thuật Toán, cần tổng hợp thành tài liệu ôn thi. Không biết \LaTeX{}, không rành thuật toán. Trong 2 ngày làm việc, kết quả cuối cùng là \textbf{52 trang Lecture Notes} hoàn chỉnh với:
+
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+  \item 20+ pseudocode có annotation
+  \item 15+ đồ thị TikZ (cây, graph, heap)
+  \item Bảng complexity chi tiết
+  \item Animation sắp xếp từng bước
+  \item Floyd-Warshall trace đầy đủ
+  \item So sánh Greedy vs D\&C vs DP
+\end{itemize}
+\end{multicols}
+
+\textbf{Quan trọng:} Không phải ``copy-paste'' mà là quá trình \textit{hỏi → hiểu → yêu cầu thêm → phát hiện thiếu → bổ sung}.
+\end{storybox}
+
+% ================================================================
+\section{5 Giai đoạn Học Một Thứ Mới}
+
+% ----- PHASE 1 -----
+\subsection{Giai đoạn 1: Ngợp — ``Cái gì cũng không biết''}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  % Brain with question marks
+  \node[circle, fill=phase1!20, draw=phase1, minimum size=2.5cm, line width=1.5pt] (brain) at (0,0) {};
+  \node[font=\Huge] at (0, 0.1) {🧠};
+  \node[font=\large\bfseries, text=phase1] at (1.6, 0.8) {?};
+  \node[font=\Large\bfseries, text=phase1] at (-1.4, 1.0) {?};
+  \node[font=\large\bfseries, text=phase1] at (1.2, -0.7) {?};
+  \node[font=\large\bfseries, text=phase1] at (-1.6, -0.5) {?};
+  \node[font=\normalsize\bfseries, text=phase1] at (0.3, 1.5) {?};
+  
+  % Labels around
+  \node[font=\scriptsize, text=gray] at (3.5, 0.8) {``$\Theta(n \lg n)$ là gì?''};
+  \node[font=\scriptsize, text=gray] at (3.8, 0) {``Heap với Stack khác gì?''};
+  \node[font=\scriptsize, text=gray] at (4.0, -0.8) {``DP là Dynamic gì?''};
+  \node[font=\scriptsize, text=gray] at (-3.5, 0.5) {``Greedy nghe quen''};
+  \node[font=\scriptsize, text=gray] at (-3.8, -0.5) {``Floyd ai đó?''};
+\end{tikzpicture}
+\end{center}
+
+\begin{insightbox}[Đặc điểm của giai đoạn này]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+  \item Nhìn đâu cũng thấy \textbf{thuật ngữ lạ} — cảm giác ``mình không thuộc về đây''
+  \item Không biết \textbf{bắt đầu từ đâu} — mọi thứ dường như quan trọng như nhau
+  \item Dễ bỏ cuộc vì \textbf{khoảng cách} giữa ``hiện tại'' và ``cần đạt'' quá xa
+\end{itemize}
+\end{insightbox}
+
+\begin{tipbox}[Cách vượt qua]
+\textbf{Đừng cố hiểu hết.} Chỉ cần đọc qua 1 lần để biết \textit{có những gì}. Như lần đầu vào thành phố mới -- chỉ cần biết có metro, có bus, có taxi -- chưa cần thuộc tất cả tuyến.
+
+\textbf{Trong dự án này:} Bước đầu tiên chỉ là ``đưa ảnh bài giảng → tổng hợp thành văn bản''. Không yêu cầu TikZ, không yêu cầu đẹp.
+\end{tipbox}
+
+% ----- PHASE 2 -----
+\subsection{Giai đoạn 2: Nhận mẫu — ``À, hóa ra có pattern!''}
+
+\begin{center}
+\begin{tikzpicture}[
+  block/.style={rectangle, rounded corners=3pt, draw=phase2, fill=phase2!10,
+    minimum width=2cm, minimum height=0.7cm, font=\scriptsize\bfseries, align=center}
+]
+  % Pattern recognition
+  \node[block] (a1) at (0, 1.5) {Bubble Sort};
+  \node[block] (a2) at (3, 1.5) {Selection Sort};
+  \node[block] (a3) at (6, 1.5) {Insertion Sort};
+  
+  \node[block, fill=phase2!30, draw=phase2, line width=1.5pt] (pattern) at (3, 0) {Cùng pattern:\\Ý tưởng → Pseudocode\\→ Complexity → Ví dụ};
+  
+  \draw[-{Stealth}, phase2, thick] (a1) -- (pattern);
+  \draw[-{Stealth}, phase2, thick] (a2) -- (pattern);
+  \draw[-{Stealth}, phase2, thick] (a3) -- (pattern);
+  
+  % Lightbulb
+  \node[font=\Large] at (8, 0.7) {💡};
+  \node[font=\scriptsize\itshape, text=phase2, text width=3cm, align=center] at (8, 0) {``Mỗi thuật toán đều\\có cùng cấu trúc\\trình bày!''};
+\end{tikzpicture}
+\end{center}
+
+\begin{insightbox}[Đặc điểm của giai đoạn này]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+  \item Bắt đầu thấy \textbf{cấu trúc lặp lại}: ``Ờ, sorting nào cũng có Ý tưởng → Pseudocode → Trace''
+  \item Bắt đầu \textbf{so sánh}: ``Merge Sort khác Quick Sort ở đâu?''
+  \item Bắt đầu \textbf{đặt câu hỏi đúng}: ``Thiếu phần Ý tưởng cho Heap Sort rồi?''
+\end{itemize}
+\end{insightbox}
+
+\begin{storybox}[Khoảnh khắc ``Aha!'']
+Khi nhận ra \textit{``phần Heap Sort thiếu mục Ý tưởng mà các thuật toán khác đều có''} -- đó là dấu hiệu bạn đã nhận ra pattern. Bạn không chỉ đọc, bạn đang \textbf{kiểm tra tính nhất quán} — một kỹ năng của người hiểu sâu.
+\end{storybox}
+
+% ----- PHASE 3 -----
+\subsection{Giai đoạn 3: Xây dựng — ``Để tôi thử tự làm''}
+
+\begin{center}
+\begin{tikzpicture}[
+  layer/.style={rectangle, rounded corners=4pt, minimum width=10cm, minimum height=0.9cm, 
+    font=\small, align=center, draw=phase3!80},
+  >=Stealth
+]
+  \node[layer, fill=phase3!10] (l1) at (0, 0) {Văn bản thuần túy -- Gõ nội dung};
+  \node[layer, fill=phase3!20] (l2) at (0, 1.2) {Thêm bảng, công thức -- $O(n \lg n)$, ma trận};
+  \node[layer, fill=phase3!30] (l3) at (0, 2.4) {Thêm pseudocode -- tcolorbox, verbatim};
+  \node[layer, fill=phase3!40] (l4) at (0, 3.6) {Thêm đồ thị -- TikZ nodes, edges, trees};
+  \node[layer, fill=phase3!55] (l5) at (0, 4.8) {Thêm animation -- ma trận từng bước, trace};
+  
+  \draw[->, thick, phase3!70] (l1.east) to[bend left=40] node[right, font=\tiny\itshape, text=gray] {+1 kỹ năng} (l2.east);
+  \draw[->, thick, phase3!70] (l2.east) to[bend left=40] node[right, font=\tiny\itshape, text=gray] {+1 kỹ năng} (l3.east);
+  \draw[->, thick, phase3!70] (l3.east) to[bend left=40] node[right, font=\tiny\itshape, text=gray] {+1 kỹ năng} (l4.east);
+  \draw[->, thick, phase3!70] (l4.east) to[bend left=40] node[right, font=\tiny\itshape, text=gray] {+1 kỹ năng} (l5.east);
+  
+  % Label
+  \node[font=\scriptsize\bfseries, text=phase3!80] at (-6, 2.4) {\rotatebox{90}{Độ phức tạp tăng dần →}};
+\end{tikzpicture}
+\end{center}
+
+\begin{tipbox}[Nguyên tắc vàng: Scaffolding]
+Học theo \textbf{từng lớp} (scaffolding), không nhảy cóc:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+  \item \textbf{Làm được} cái đơn giản trước → tự tin
+  \item \textbf{Thêm 1 thứ mới} vào cái đã biết → mở rộng
+  \item \textbf{Lặp lại} pattern đã học cho trường hợp mới → củng cố
+  \item \textbf{Phát hiện giới hạn} → động lực học thêm
+\end{enumerate}
+
+\textit{Đừng bao giờ cố học TikZ trước khi viết được 1 đoạn văn bản LaTeX đơn giản.}
+\end{tipbox}
+
+% ----- PHASE 4 -----
+\subsection{Giai đoạn 4: Sáng tạo — ``Nếu thế này thì sao?''}
+
+\begin{center}
+\begin{tikzpicture}[
+  idea/.style={cloud, cloud puffs=10, cloud puff arc=120, draw=phase4, fill=phase4!10,
+    minimum width=2.5cm, minimum height=1.3cm, font=\scriptsize, align=center, inner sep=2pt},
+  >=Stealth
+]
+  \node[idea] (i1) at (0, 0) {``Thêm ví dụ 3\\cho heap tree?''};
+  \node[idea] (i2) at (4.5, 0.5) {``Vẽ đồ thị\\Floyd-Warshall?''};
+  \node[idea] (i3) at (9, 0) {``So sánh 3\\phương pháp?''};
+  \node[idea] (i4) at (2.5, -1.8) {``Cạnh âm thì\\Dijkstra sao?''};
+  \node[idea] (i5) at (7, -1.8) {``Min-Heap vs\\Max-Heap?''};
+  
+  % Central node
+  \node[circle, fill=phase4!30, draw=phase4, minimum size=1.5cm, font=\small\bfseries, line width=1.5pt] (center) at (4.5, -1) {BẠN};
+  
+  \draw[->, phase4, thick, dashed] (center) -- (i1);
+  \draw[->, phase4, thick, dashed] (center) -- (i2);
+  \draw[->, phase4, thick, dashed] (center) -- (i3);
+  \draw[->, phase4, thick, dashed] (center) -- (i4);
+  \draw[->, phase4, thick, dashed] (center) -- (i5);
+\end{tikzpicture}
+\end{center}
+
+\begin{insightbox}[Dấu hiệu bạn đang ở giai đoạn 4]
+Bạn bắt đầu:
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+  \item \textbf{Đề xuất} thêm nội dung, không chỉ tiếp nhận
+  \item \textbf{Phát hiện} lỗ hổng: ``Floyd-Warshall chưa có đồ thị!''
+  \item \textbf{Kết nối} kiến thức: ``Dijkstra không chạy với cạnh âm, vậy Floyd-Warshall?''
+  \item \textbf{Yêu cầu trực quan}: ``Vẽ cây heap 3 ví dụ song song được không?''
+\end{itemize}
+\end{insightbox}
+
+% ----- PHASE 5 -----
+\subsection{Giai đoạn 5: Làm chủ — ``Tôi có thể dạy lại''}
+
+\begin{center}
+\begin{tikzpicture}[
+  >=Stealth, scale=0.85, transform shape
+]
+  % Teaching flow
+  \node[rectangle, rounded corners=5pt, fill=phase5!20, draw=phase5, 
+    minimum width=3cm, minimum height=1cm, font=\small\bfseries, align=center] (teach) at (0, 0) 
+    {Bạn dạy\\cho người khác};
+  
+  \node[rectangle, rounded corners=5pt, fill=phase5!10, draw=phase5!60, 
+    minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize, align=center] (s1) at (-4, 1.5) 
+    {Giải thích\\bằng lời mình};
+  \node[rectangle, rounded corners=5pt, fill=phase5!10, draw=phase5!60, 
+    minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize, align=center] (s2) at (0, 2) 
+    {Vẽ hình\\minh họa};
+  \node[rectangle, rounded corners=5pt, fill=phase5!10, draw=phase5!60, 
+    minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize, align=center] (s3) at (4, 1.5) 
+    {Tạo ví dụ\\mới};
+  \node[rectangle, rounded corners=5pt, fill=phase5!10, draw=phase5!60, 
+    minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize, align=center] (s4) at (-4, -1.5) 
+    {Phát hiện\\lỗi sai};
+  \node[rectangle, rounded corners=5pt, fill=phase5!10, draw=phase5!60, 
+    minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize, align=center] (s5) at (0, -2) 
+    {So sánh\\phương pháp};
+  \node[rectangle, rounded corners=5pt, fill=phase5!10, draw=phase5!60, 
+    minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize, align=center] (s6) at (4, -1.5) 
+    {Viết tài liệu\\cho người khác};
+  
+  \draw[->, phase5, thick] (teach) -- (s1);
+  \draw[->, phase5, thick] (teach) -- (s2);
+  \draw[->, phase5, thick] (teach) -- (s3);
+  \draw[->, phase5, thick] (teach) -- (s4);
+  \draw[->, phase5, thick] (teach) -- (s5);
+  \draw[->, phase5, thick] (teach) -- (s6);
+  
+  % Feynman quote
+  \node[text width=5cm, align=center, font=\itshape\scriptsize, text=gray] at (8, 0) 
+    {``If you can't explain it\\simply, you don't\\understand it well enough.''\\[2pt]--- Richard Feynman};
+\end{tikzpicture}
+\end{center}
+
+% ================================================================
+\section{Biểu đồ: Tiến trình thực tế của dự án}
+
+\begin{center}
+\begin{tikzpicture}[
+  >=Stealth, scale=0.8, transform shape,
+  milestone/.style={circle, fill=#1, draw=#1!80!black, minimum size=5mm, inner sep=0pt},
+  mlabel/.style={font=\scriptsize, text width=3cm, align=center},
+  time/.style={font=\tiny\itshape, text=gray}
+]
+  % Timeline
+  \draw[very thick, gray!30] (0, 0) -- (16, 0);
+  
+  % Milestones
+  \node[milestone=phase1] (m1) at (0, 0) {};
+  \node[milestone=phase1] (m2) at (2, 0) {};
+  \node[milestone=phase2] (m3) at (4, 0) {};
+  \node[milestone=phase3] (m4) at (6, 0) {};
+  \node[milestone=phase3] (m5) at (8, 0) {};
+  \node[milestone=phase4] (m6) at (10, 0) {};
+  \node[milestone=phase4] (m7) at (12, 0) {};
+  \node[milestone=phase5] (m8) at (14, 0) {};
+  \node[milestone=phase5] (m9) at (16, 0) {};
+  
+  % Labels above
+  \node[mlabel, above=0.3cm of m1] {Tổng hợp\\ảnh bài giảng};
+  \node[mlabel, above=0.3cm of m3] {Thêm bảng\\Complexity};
+  \node[mlabel, above=0.3cm of m5] {Vẽ cây\\Heap Sort};
+  \node[mlabel, above=0.3cm of m7] {Thêm đồ thị\\Floyd-Warshall};
+  \node[mlabel, above=0.3cm of m9] {Bảng so sánh\\3 phương pháp};
+  
+  % Labels below
+  \node[mlabel, below=0.3cm of m2] {Thêm Self-study\\strategies};
+  \node[mlabel, below=0.3cm of m4] {Chỉnh sửa\\công thức};
+  \node[mlabel, below=0.3cm of m6] {Phát hiện\\thiếu Ý tưởng};
+  \node[mlabel, below=0.3cm of m8] {Ví dụ cạnh\\âm YouTube};
+  
+  % Depth indicator
+  \draw[thick, gray!50, dashed] (0, -2.5) -- (16, -2.5);
+  \node[font=\tiny, text=gray] at (-1, -2.5) {Nông};
+  \node[font=\tiny, text=gray] at (-1, -4.5) {Sâu};
+  
+  % Depth curve
+  \draw[very thick, phase3!80, smooth] plot coordinates {
+    (0, -2.7) (2, -3.0) (4, -3.3) (6, -3.6) (8, -3.9) (10, -4.1) (12, -4.3) (14, -4.5) (16, -4.6)
+  };
+  \node[font=\scriptsize\bfseries, text=phase3!80] at (8, -5) {Độ hiểu sâu tăng dần →};
+\end{tikzpicture}
+\end{center}
+
+% ================================================================
+\section{Bài học rút ra}
+
+\begin{center}
+\begin{tikzpicture}[
+  lesson/.style={rectangle, rounded corners=5pt, draw=#1, fill=#1!8, 
+    text width=6.5cm, minimum height=1.2cm, font=\small, align=left,
+    inner sep=6pt},
+  num/.style={circle, fill=#1, text=white, minimum size=6mm, font=\small\bfseries, inner sep=0pt}
+]
+  \node[num=phase1] (n1) at (0, 5) {1};
+  \node[lesson=phase1, right=0.3cm of n1] {Bắt đầu bằng \textbf{output thô} -- đừng cầu toàn từ đầu. V1 chỉ cần ``có chữ trên giấy''.};
+  
+  \node[num=phase2] (n2) at (0, 3.5) {2};
+  \node[lesson=phase2, right=0.3cm of n2] {\textbf{Hỏi nhiều} = học nhanh. Mỗi câu hỏi ``tại sao?'' mở ra 1 tầng hiểu biết mới.};
+  
+  \node[num=phase3] (n3) at (0, 2) {3};
+  \node[lesson=phase3, right=0.3cm of n3] {\textbf{Lặp lại pattern} cho nhiều trường hợp. Thêm complexity cho 1 thuật toán → làm cho tất cả.};
+  
+  \node[num=phase4] (n4) at (0, 0.5) {4};
+  \node[lesson=phase4, right=0.3cm of n4] {\textbf{Phát hiện thiếu sót} = dấu hiệu hiểu sâu. ``Heap Sort thiếu Ý tưởng'' → bạn đã maste pattern.};
+  
+  \node[num=phase5] (n5) at (0, -1) {5};
+  \node[lesson=phase5, right=0.3cm of n5] {\textbf{Trực quan hóa} = hiểu cấp cao nhất. Khi bạn vẽ được cây, đồ thị, animation → bạn thực sự hiểu.};
+\end{tikzpicture}
+\end{center}
+
+% ================================================================
+\section{Công thức Học}
+
+\begin{center}
+\begin{tikzpicture}
+  \node[rectangle, rounded corners=8pt, fill=darkbg, text=white,
+    minimum width=13cm, minimum height=3cm, align=center, font=\large,
+    inner sep=15pt, drop shadow={shadow xshift=1mm, shadow yshift=-1mm}] {
+    \textbf{\textcolor{accent}{Học = Đọc} $\times$ \textcolor{phase1}{Hỏi} $\times$ \textcolor{phase3}{Làm} $\times$ \textcolor{phase5}{Dạy lại}}\\[10pt]
+    {\normalsize\itshape
+    \textcolor{gray!60}{Đọc 1 lần = 10\% nhớ} \quad|\quad 
+    \textcolor{gray!60}{Hỏi ``tại sao'' = 30\%} \quad|\quad
+    \textcolor{gray!60}{Tự làm = 70\%} \quad|\quad
+    \textcolor{gray!60}{Dạy lại = 95\%}}
+  };
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{mistakebox}[Sai lầm phổ biến]
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+  \item \textbf{Đọc xong nghĩ là hiểu.} Hiểu thật = giải thích được cho người khác bằng lời mình.
+  \item \textbf{Nhảy thẳng vào cái khó.} Không ai vẽ TikZ graph trước khi viết được ``Hello World'' trong \LaTeX{}.
+  \item \textbf{Học một mình.} Hỏi AI, hỏi bạn, hỏi thầy -- mỗi câu hỏi tiết kiệm hàng giờ mò mẫm.
+  \item \textbf{Cầu toàn quá sớm.} V1 xấu nhưng \textit{tồn tại} hơn V∞ đẹp nhưng \textit{không bao giờ hoàn thành}.
+\end{enumerate}
+\end{mistakebox}
+
+\vspace{0.5cm}
+
+\begin{tipbox}[Áp dụng ngay hôm nay]
+Chọn \textbf{1 thuật toán} bạn chưa hiểu. Thực hiện đúng 4 bước:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+  \item \textbf{Đọc} pseudocode 1 lần (5 phút)
+  \item \textbf{Trace} bằng tay với mảng $[5, 3, 8, 1, 4]$ (10 phút)
+  \item \textbf{Vẽ} cây hoặc đồ thị minh họa (10 phút)
+  \item \textbf{Giải thích} cho bạn cùng phòng trong 2 phút (2 phút)
+\end{enumerate}
+
+\textbf{Tổng: 27 phút.} Nếu bạn làm được 4 bước này, bạn hiểu thuật toán đó hơn 90\% người chỉ đọc slide.
+\end{tipbox}
+
+\vspace{1cm}
+\begin{center}
+\rule{0.5\linewidth}{0.5pt}\\[0.3cm]
+{\itshape ``Hành trình vạn dặm bắt đầu từ một bước chân.''}\\[0.2cm]
+{\small --- Lão Tử (老子)}
+\end{center}
+
+\end{document}
