@@ -407,6 +407,90 @@ Bạn bắt đầu:
 \end{tikzpicture}
 \end{center}
 
+% ================================================================
+\section{Quy trình xác minh đa mô hình AI (Multi-Model Verification)}
+
+Một bài học quan trọng trong dự án này: \textbf{không tin tưởng tuyệt đối vào một AI duy nhất}. Chúng tôi sử dụng nhiều mô hình AI song song, mỗi mô hình có thế mạnh riêng.
+
+\begin{center}
+\begin{tikzpicture}[
+  >=Stealth, scale=0.85, transform shape,
+  model/.style={rectangle, rounded corners=5pt, draw=#1, fill=#1!12, 
+    minimum width=3.2cm, minimum height=1.4cm, font=\small, align=center, 
+    line width=1.2pt, drop shadow={shadow xshift=0.5mm, shadow yshift=-0.5mm, opacity=0.2}},
+  task/.style={rectangle, rounded corners=3pt, draw=gray!50, fill=gray!5,
+    minimum width=2.4cm, minimum height=0.6cm, font=\scriptsize, align=center},
+  arrow/.style={->, thick, gray!60}
+]
+  % Models
+  \node[model=phase4] (opus) at (0, 0) {\textbf{Claude Opus 4.6}\\{\scriptsize Code · LaTeX · TikZ}\\{\scriptsize System design}};
+  \node[model=phase3] (gemini) at (7, 0) {\textbf{Gemini 3.1 Pro}\\{\scriptsize Math logic · Verify}\\{\scriptsize Cross-check}};
+  
+  % Central workflow
+  \node[circle, fill=accent!20, draw=accent, minimum size=1.2cm, font=\scriptsize\bfseries, 
+    align=center, line width=1pt] (you) at (3.5, 0) {BẠN\\{\tiny(điều phối)}};
+  
+  % Arrows
+  \draw[arrow, phase4] (you) -- (opus) node[midway, above, font=\tiny] {yêu cầu};
+  \draw[arrow, phase3] (you) -- (gemini) node[midway, above, font=\tiny] {verify};
+  
+  % Tasks for Opus
+  \node[task] (t1) at (-2.5, -2) {Viết code LaTeX};
+  \node[task] (t2) at (0, -2) {Vẽ TikZ graph};
+  \node[task] (t3) at (2.5, -2) {Build pipeline};
+  \draw[->, phase4!60, thin] (opus) -- (t1);
+  \draw[->, phase4!60, thin] (opus) -- (t2);
+  \draw[->, phase4!60, thin] (opus) -- (t3);
+  
+  % Tasks for Gemini
+  \node[task] (t4) at (5, -2) {Verify Floyd trace};
+  \node[task] (t5) at (7.5, -2) {Check math logic};
+  \node[task] (t6) at (10, -2) {Audit complexity};
+  \draw[->, phase3!60, thin] (gemini) -- (t4);
+  \draw[->, phase3!60, thin] (gemini) -- (t5);
+  \draw[->, phase3!60, thin] (gemini) -- (t6);
+  
+  % Feedback loop
+  \draw[->, red!50, thick, dashed, bend left=25] (gemini.north) to 
+    node[above, font=\tiny\itshape, text=red!60] {phát hiện lỗi → sửa lại} (opus.north);
+\end{tikzpicture}
+\end{center}
+
+\begin{insightbox}[Tại sao cần nhiều AI?]
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+  \item \textbf{Mỗi model có blind spot.} Model A code giỏi nhưng có thể sai logic toán. Model B kiểm tra logic tốt nhưng không viết được TikZ.
+  \item \textbf{Cross-verification} = như có 2 người review code. Nếu cả hai cho cùng kết quả → độ tin cậy cao.
+  \item \textbf{Bạn là người điều phối}, không phải người thụ động. Bạn quyết định \textit{hỏi ai}, \textit{hỏi gì}, \textit{khi nào chuyển}.
+\end{itemize}
+\end{insightbox}
+
+\begin{center}
+{\small
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{5cm}|}
+\hline
+\textbf{Tình huống} & \textbf{Model chính} & \textbf{Model xác minh} \\
+\hline\hline
+Viết code LaTeX, TikZ & Claude Opus (code mạnh) & Gemini Pro (review output) \\
+\hline
+Trace thuật toán & Claude Opus (tạo trace) & Gemini Pro (verify từng bước) \\
+\hline
+Kiểm tra công thức & Gemini Pro (math logic) & Claude Opus (cross-check) \\
+\hline
+Build pipeline/tool & Claude Opus (system design) & Chạy test thực tế \\
+\hline
+\end{tabular}
+}
+\captionof{table}{Phân chia vai trò giữa các mô hình AI}\label{tab:multi-model}
+\end{center}
+
+\begin{tipbox}[Quy tắc chuyển model]
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+  \item \textbf{Code xong → Verify math.} Sau khi AI viết trace Floyd-Warshall, chuyển sang model khác kiểm tra từng bước $D^{(k)}$.
+  \item \textbf{Nghi ngờ → Cross-check.} Nếu kết quả ``trông lạ'', hỏi model thứ hai.
+  \item \textbf{Cuối cùng: tự trace bằng tay.} AI verify lẫn nhau chỉ là bước 1. Bước cuối luôn là bạn tự làm.
+\end{enumerate}
+\end{tipbox}
+
 \vspace{0.5cm}
 
 \begin{mistakebox}[Sai lầm phổ biến]
